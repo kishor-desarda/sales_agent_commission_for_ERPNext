@@ -107,39 +107,38 @@ after_uninstall = "sales_agent_commission.install.after_uninstall"
 
 doc_events = {
 	"Sales Invoice": {
-		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.agent_commission_entry.agent_commission_entry.create_commission_entries",
-		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.agent_commission_entry.agent_commission_entry.cancel_commission_entries"
+		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.create_commission_entries",
+		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.cancel_commission_entries"
 	},
 	"Payment Entry": {
-		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.agent_commission_entry.agent_commission_entry.update_commission_payment_status",
-		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.agent_commission_entry.agent_commission_entry.revert_commission_payment_status"
+		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.update_commission_payment_status",
+		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.revert_commission_payment_status"
+	},
+	"Payment Reconciliation": {
+		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.update_commission_due_status",
+		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.revert_commission_due_status"
 	},
 	"Commission Payment Voucher": {
 		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.commission_payment_voucher.commission_payment_voucher.update_commission_entries",
 		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.commission_payment_voucher.commission_payment_voucher.revert_commission_entries"
+	},
+	"Sales Partner": {
+		"after_insert": "sales_agent_commission.sales_agent_commission.doctype.sales_agent.sales_agent.create_sales_agent_from_partner",
+		"on_update": "sales_agent_commission.sales_agent_commission.doctype.sales_agent.sales_agent.update_sales_agent_from_partner"
 	}
 }
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-#	"all": [
-#		"sales_agent_commission.tasks.all"
-#	],
-#	"daily": [
-#		"sales_agent_commission.tasks.daily"
-#	],
-#	"hourly": [
-#		"sales_agent_commission.tasks.hourly"
-#	],
-#	"weekly": [
-#		"sales_agent_commission.tasks.weekly"
-#	],
-#	"monthly": [
-#		"sales_agent_commission.tasks.monthly"
-#	],
-# }
+scheduler_events = {
+	"daily": [
+		"sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.update_commission_status_daily"
+	],
+	"weekly": [
+		"sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.send_commission_statements"
+	]
+}
 
 # Testing
 # -------
@@ -201,63 +200,111 @@ doc_events = {
 #	"sales_agent_commission.auth.validate"
 # ]
 
-# Sidebar Integration
+# Website Integration
 # -------------------
 
-# Add Sales Commission submenu under Selling
-def get_selling_menu():
-	"""Add Sales Commission menu to Selling section"""
-	return [
+# website_route_rules = [
+# 	{"from_route": "/commission/<path:app_path>", "to_route": "commission"},
+# ]
+
+# Custom Fields
+# -------------
+
+# Add custom fields to existing doctypes
+custom_fields = {
+	"Sales Partner": [
 		{
-			"label": "Sales Commission",
-			"icon": "fa fa-percentage",
-			"items": [
-				{
-					"type": "doctype",
-					"name": "Agent Commission Rule",
-					"label": "Commission Rules",
-					"description": "Define commission rules for agents"
-				},
-				{
-					"type": "doctype",
-					"name": "Agent Customer Assignment",
-					"label": "Customer Assignments",
-					"description": "Assign customers to agents"
-				},
-				{
-					"type": "doctype",
-					"name": "Agent Commission Entry",
-					"label": "Commission Entries",
-					"description": "View commission entries"
-				},
-				{
-					"type": "doctype",
-					"name": "Commission Payment Voucher",
-					"label": "Payment Vouchers",
-					"description": "Create commission payments"
-				},
-				{
-					"type": "separator"
-				},
-				{
-					"type": "report",
-					"name": "Agent Commission Summary",
-					"label": "Commission Summary",
-					"description": "Commission summary report",
-					"is_query_report": True
-				},
-				{
-					"type": "report",
-					"name": "Agent Commission Payable",
-					"label": "Commission Payable",
-					"description": "Outstanding commission report",
-					"is_query_report": True
-				}
-			]
+			"fieldname": "sales_agent_commission_section",
+			"fieldtype": "Section Break",
+			"label": "Sales Agent Commission",
+			"insert_after": "commission_rate"
+		},
+		{
+			"fieldname": "linked_sales_agent",
+			"fieldtype": "Link",
+			"label": "Linked Sales Agent",
+			"options": "Sales Agent",
+			"insert_after": "sales_agent_commission_section",
+			"read_only": 1
+		},
+		{
+			"fieldname": "auto_create_commission_entries",
+			"fieldtype": "Check",
+			"label": "Auto Create Commission Entries",
+			"insert_after": "linked_sales_agent",
+			"default": 1
+		}
+	],
+	"Sales Invoice": [
+		{
+			"fieldname": "commission_section",
+			"fieldtype": "Section Break",
+			"label": "Commission Information",
+			"insert_after": "terms",
+			"collapsible": 1
+		},
+		{
+			"fieldname": "sales_agent",
+			"fieldtype": "Link",
+			"label": "Sales Agent",
+			"options": "Sales Agent",
+			"insert_after": "commission_section"
+		},
+		{
+			"fieldname": "commission_entries_created",
+			"fieldtype": "Check",
+			"label": "Commission Entries Created",
+			"insert_after": "sales_agent",
+			"read_only": 1
+		}
+	],
+	"Customer": [
+		{
+			"fieldname": "sales_agent_section",
+			"fieldtype": "Section Break",
+			"label": "Sales Agent Information",
+			"insert_after": "default_sales_partner",
+			"collapsible": 1
+		},
+		{
+			"fieldname": "primary_sales_agent",
+			"fieldtype": "Link",
+			"label": "Primary Sales Agent",
+			"options": "Sales Agent",
+			"insert_after": "sales_agent_section"
+		},
+		{
+			"fieldname": "commission_applicable",
+			"fieldtype": "Check",
+			"label": "Commission Applicable",
+			"insert_after": "primary_sales_agent",
+			"default": 1
 		}
 	]
-
-# Override selling menu
-override_doctype_class = {
-	"Desk": "sales_agent_commission.overrides.CustomDesk"
 }
+
+# Fixtures
+# --------
+
+fixtures = [
+	{
+		"doctype": "Custom Field",
+		"filters": [
+			[
+				"name",
+				"in",
+				[
+					"Sales Partner-sales_agent_commission_section",
+					"Sales Partner-linked_sales_agent",
+					"Sales Partner-auto_create_commission_entries",
+					"Sales Invoice-commission_section",
+					"Sales Invoice-sales_agent",
+					"Sales Invoice-commission_entries_created",
+					"Customer-sales_agent_section",
+					"Customer-primary_sales_agent",
+					"Customer-commission_applicable"
+				]
+			]
+		]
+	}
+]

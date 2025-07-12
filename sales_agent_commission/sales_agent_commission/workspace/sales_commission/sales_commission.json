@@ -1,0 +1,145 @@
+{
+ "category": "Modules",
+ "charts": [
+  {
+   "chart_name": "Commission Summary",
+   "label": "Commission Summary"
+  }
+ ],
+ "creation": "2024-01-01 00:00:00",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "extends": "Selling",
+ "extends_another_page": 1,
+ "hide_custom": 0,
+ "icon": "percentage",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Sales Commission",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sales Agents",
+   "link_count": 0,
+   "link_to": "Sales Agent",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Customer Assignments",
+   "link_count": 0,
+   "link_to": "Sales Agent Customer Assignment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Commission Entries",
+   "link_count": 0,
+   "link_to": "Sales Agent Commission Entry",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Payment Vouchers",
+   "link_count": 0,
+   "link_to": "Commission Payment Voucher",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Commission Summary",
+   "link_count": 0,
+   "link_to": "Sales Agent Commission Summary",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Commission Payable",
+   "link_count": 0,
+   "link_to": "Sales Agent Commission Payable",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Agent Performance",
+   "link_count": 0,
+   "link_to": "Sales Agent Performance",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-01-01 00:00:00",
+ "modified_by": "Administrator",
+ "module": "Sales Agent Commission",
+ "name": "Sales Commission",
+ "owner": "Administrator",
+ "parent_page": "Selling",
+ "public": 1,
+ "quick_lists": [
+  {
+   "document_type": "Sales Agent Commission Entry",
+   "label": "Recent Commission Entries",
+   "quick_list_filter": "{\"commission_status\": [\"=\", \"Due for Payment\"]}"
+  },
+  {
+   "document_type": "Sales Agent",
+   "label": "Active Agents",
+   "quick_list_filter": "{\"status\": [\"=\", \"Active\"]}"
+  }
+ ],
+ "roles": [],
+ "sequence_id": 1,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Sales Agents",
+   "link_to": "Sales Agent",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Commission Entries",
+   "link_to": "Sales Agent Commission Entry",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Payment Vouchers",
+   "link_to": "Commission Payment Voucher",
+   "type": "DocType"
+  },
+  {
+   "color": "Purple",
+   "doc_view": "Report",
+   "label": "Commission Summary",
+   "link_to": "Sales Agent Commission Summary",
+   "type": "Report"
+  }
+ ],
+ "title": "Sales Commission"
+}

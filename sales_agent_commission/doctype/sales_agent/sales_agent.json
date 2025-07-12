@@ -1,0 +1,448 @@
+{
+ "actions": [],
+ "allow_copy": 1,
+ "allow_events_in_timeline": 1,
+ "allow_guest_to_view": 0,
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:agent_code",
+ "beta": 0,
+ "creation": "2024-01-01 00:00:00",
+ "custom": 0,
+ "description": "Complete Sales Agent master with commission rates, territory allocation and all agent details",
+ "docstatus": 0,
+ "doctype": "DocType",
+ "document_type": "Master",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_info_section",
+  "agent_code",
+  "agent_name",
+  "sales_partner",
+  "employee",
+  "status",
+  "column_break_6",
+  "joining_date",
+  "termination_date",
+  "agent_type",
+  "commission_calculation_method",
+  "contact_details_section",
+  "email",
+  "mobile_no",
+  "phone",
+  "column_break_13",
+  "address_line_1",
+  "address_line_2",
+  "city",
+  "state",
+  "postal_code",
+  "country",
+  "territory_allocation_section",
+  "territories",
+  "commission_structure_section",
+  "item_group_commission_rates",
+  "payment_details_section",
+  "bank_account",
+  "payment_method",
+  "tax_id",
+  "column_break_26",
+  "payment_terms",
+  "minimum_commission_amount",
+  "maximum_commission_amount",
+  "settings_section",
+  "enable_commission",
+  "commission_on_delivery",
+  "commission_on_payment",
+  "column_break_32",
+  "auto_create_commission_entries",
+  "send_commission_statements",
+  "commission_statement_frequency",
+  "audit_section",
+  "created_by",
+  "creation_date",
+  "modified_by",
+  "column_break_38",
+  "last_modified",
+  "approval_status",
+  "approved_by",
+  "notes_section",
+  "notes",
+  "internal_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_info_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information"
+  },
+  {
+   "fieldname": "agent_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Agent Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "agent_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Agent Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sales_partner",
+   "fieldtype": "Link",
+   "label": "Linked Sales Partner",
+   "options": "Sales Partner",
+   "read_only": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Active\nInactive\nSuspended\nTerminated",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "joining_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Joining Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "termination_date",
+   "fieldtype": "Date",
+   "label": "Termination Date",
+   "depends_on": "eval:doc.status=='Terminated'"
+  },
+  {
+   "default": "External",
+   "fieldname": "agent_type",
+   "fieldtype": "Select",
+   "label": "Agent Type",
+   "options": "Internal\nExternal\nDistributor\nDealer",
+   "reqd": 1
+  },
+  {
+   "default": "Percentage",
+   "fieldname": "commission_calculation_method",
+   "fieldtype": "Select",
+   "label": "Commission Calculation Method",
+   "options": "Percentage\nFixed Amount\nTiered\nCustom",
+   "reqd": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "contact_details_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Details"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "address_line_1",
+   "fieldtype": "Data",
+   "label": "Address Line 1"
+  },
+  {
+   "fieldname": "address_line_2",
+   "fieldtype": "Data",
+   "label": "Address Line 2"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "State"
+  },
+  {
+   "fieldname": "postal_code",
+   "fieldtype": "Data",
+   "label": "Postal Code"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "territory_allocation_section",
+   "fieldtype": "Section Break",
+   "label": "Territory Allocation"
+  },
+  {
+   "fieldname": "territories",
+   "fieldtype": "Table",
+   "label": "Territories",
+   "options": "Sales Agent Territory"
+  },
+  {
+   "fieldname": "commission_structure_section",
+   "fieldtype": "Section Break",
+   "label": "Commission Structure"
+  },
+  {
+   "fieldname": "item_group_commission_rates",
+   "fieldtype": "Table",
+   "label": "Item Group Commission Rates",
+   "options": "Sales Agent Commission Rate",
+   "reqd": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "payment_details_section",
+   "fieldtype": "Section Break",
+   "label": "Payment Details"
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "label": "Bank Account",
+   "options": "Bank Account"
+  },
+  {
+   "default": "Bank Transfer",
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "Payment Method",
+   "options": "Bank Transfer\nCash\nCheque\nUPI\nWallet"
+  },
+  {
+   "fieldname": "tax_id",
+   "fieldtype": "Data",
+   "label": "Tax ID / PAN"
+  },
+  {
+   "fieldname": "column_break_26",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Net 30",
+   "fieldname": "payment_terms",
+   "fieldtype": "Select",
+   "label": "Payment Terms",
+   "options": "Immediate\nNet 15\nNet 30\nNet 45\nNet 60\nQuarterly\nCustom"
+  },
+  {
+   "fieldname": "minimum_commission_amount",
+   "fieldtype": "Currency",
+   "label": "Minimum Commission Amount"
+  },
+  {
+   "fieldname": "maximum_commission_amount",
+   "fieldtype": "Currency",
+   "label": "Maximum Commission Amount"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "settings_section",
+   "fieldtype": "Section Break",
+   "label": "Commission Settings"
+  },
+  {
+   "default": 1,
+   "fieldname": "enable_commission",
+   "fieldtype": "Check",
+   "label": "Enable Commission"
+  },
+  {
+   "default": 0,
+   "fieldname": "commission_on_delivery",
+   "fieldtype": "Check",
+   "label": "Commission on Delivery"
+  },
+  {
+   "default": 1,
+   "fieldname": "commission_on_payment",
+   "fieldtype": "Check",
+   "label": "Commission on Payment Receipt",
+   "description": "Commission is payable only when payment is received"
+  },
+  {
+   "fieldname": "column_break_32",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": 1,
+   "fieldname": "auto_create_commission_entries",
+   "fieldtype": "Check",
+   "label": "Auto Create Commission Entries"
+  },
+  {
+   "default": 1,
+   "fieldname": "send_commission_statements",
+   "fieldtype": "Check",
+   "label": "Send Commission Statements"
+  },
+  {
+   "default": "Monthly",
+   "fieldname": "commission_statement_frequency",
+   "fieldtype": "Select",
+   "label": "Statement Frequency",
+   "options": "Weekly\nMonthly\nQuarterly\nYearly",
+   "depends_on": "eval:doc.send_commission_statements==1"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "audit_section",
+   "fieldtype": "Section Break",
+   "label": "Audit Information"
+  },
+  {
+   "fieldname": "created_by",
+   "fieldtype": "Link",
+   "label": "Created By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "creation_date",
+   "fieldtype": "Datetime",
+   "label": "Creation Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "modified_by",
+   "fieldtype": "Link",
+   "label": "Modified By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_38",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_modified",
+   "fieldtype": "Datetime",
+   "label": "Last Modified",
+   "read_only": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "approval_status",
+   "fieldtype": "Select",
+   "label": "Approval Status",
+   "options": "Draft\nPending Approval\nApproved\nRejected"
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "internal_notes",
+   "fieldtype": "Text Editor",
+   "label": "Internal Notes"
+  }
+ ],
+ "is_submittable": 1,
+ "links": [
+  {
+   "link_doctype": "Sales Agent Commission Entry",
+   "link_fieldname": "sales_agent"
+  },
+  {
+   "link_doctype": "Sales Agent Customer Assignment",
+   "link_fieldname": "sales_agent"
+  },
+  {
+   "link_doctype": "Commission Payment Voucher",
+   "link_fieldname": "sales_agent"
+  }
+ ],
+ "modified": "2024-01-01 00:00:00",
+ "modified_by": "Administrator",
+ "module": "Sales Agent Commission",
+ "name": "Sales Agent",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "search_fields": "agent_name,agent_code,status",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "agent_name",
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
+}
