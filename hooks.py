@@ -1,3 +1,6 @@
+# Copyright (c) 2024, Frappe Technologies Pvt. Ltd. and contributors
+# For license information, please see license.txt
+
 from . import __version__ as app_version
 
 app_name = "sales_agent_commission"
@@ -11,8 +14,8 @@ app_license = "MIT"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/sales_agent_commission/css/sales_agent_commission.css"
-# app_include_js = "/assets/sales_agent_commission/js/sales_agent_commission.js"
+app_include_css = "/assets/sales_agent_commission/css/sales_agent_commission.css"
+app_include_js = "/assets/sales_agent_commission/js/sales_agent_commission.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/sales_agent_commission/css/sales_agent_commission.css"
@@ -63,14 +66,14 @@ app_license = "MIT"
 # Installation
 # ------------
 
-# before_install = "sales_agent_commission.install.before_install"
-# after_install = "sales_agent_commission.install.after_install"
+before_install = "sales_agent_commission.install.before_install"
+after_install = "sales_agent_commission.install.after_install"
 
 # Uninstallation
 # ------------
 
-# before_uninstall = "sales_agent_commission.uninstall.before_uninstall"
-# after_uninstall = "sales_agent_commission.uninstall.after_uninstall"
+before_uninstall = "sales_agent_commission.install.before_uninstall"
+after_uninstall = "sales_agent_commission.install.after_uninstall"
 
 # Desk Notifications
 # -------------------
@@ -202,11 +205,59 @@ doc_events = {
 # -------------------
 
 # Add Sales Commission submenu under Selling
-app_include_js = [
-	"/assets/sales_agent_commission/js/sidebar.js"
-]
+def get_selling_menu():
+	"""Add Sales Commission menu to Selling section"""
+	return [
+		{
+			"label": "Sales Commission",
+			"icon": "fa fa-percentage",
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Agent Commission Rule",
+					"label": "Commission Rules",
+					"description": "Define commission rules for agents"
+				},
+				{
+					"type": "doctype",
+					"name": "Agent Customer Assignment",
+					"label": "Customer Assignments",
+					"description": "Assign customers to agents"
+				},
+				{
+					"type": "doctype",
+					"name": "Agent Commission Entry",
+					"label": "Commission Entries",
+					"description": "View commission entries"
+				},
+				{
+					"type": "doctype",
+					"name": "Commission Payment Voucher",
+					"label": "Payment Vouchers",
+					"description": "Create commission payments"
+				},
+				{
+					"type": "separator"
+				},
+				{
+					"type": "report",
+					"name": "Agent Commission Summary",
+					"label": "Commission Summary",
+					"description": "Commission summary report",
+					"is_query_report": True
+				},
+				{
+					"type": "report",
+					"name": "Agent Commission Payable",
+					"label": "Commission Payable",
+					"description": "Outstanding commission report",
+					"is_query_report": True
+				}
+			]
+		}
+	]
 
-# Override sidebar to add Sales Commission submenu
+# Override selling menu
 override_doctype_class = {
 	"Desk": "sales_agent_commission.overrides.CustomDesk"
 }

@@ -4,12 +4,24 @@
 import frappe
 from frappe import _
 
-def get_sales_commission_menu():
-	"""Get Sales Commission menu items"""
-	return [
-		{
-			"label": _("Commission Rules"),
-			"icon": "fa fa-cog",
+
+class CustomDesk:
+	"""Custom Desk class to add Sales Commission menu"""
+	
+	def __init__(self):
+		pass
+	
+	def get_selling_menu(self):
+		"""Get selling menu with Sales Commission submenu"""
+		from frappe.desk.doctype.desktop_icon.desktop_icon import get_desktop_icons
+		
+		# Get original selling menu
+		original_menu = get_desktop_icons("Selling")
+		
+		# Add Sales Commission submenu
+		sales_commission_menu = {
+			"label": _("Sales Commission"),
+			"icon": "fa fa-percentage",
 			"items": [
 				{
 					"type": "doctype",
@@ -22,13 +34,7 @@ def get_sales_commission_menu():
 					"name": "Agent Customer Assignment",
 					"label": _("Customer Assignments"),
 					"description": _("Assign customers to agents")
-				}
-			]
-		},
-		{
-			"label": _("Commission Entries"),
-			"icon": "fa fa-list",
-			"items": [
+				},
 				{
 					"type": "doctype",
 					"name": "Agent Commission Entry",
@@ -40,13 +46,10 @@ def get_sales_commission_menu():
 					"name": "Commission Payment Voucher",
 					"label": _("Payment Vouchers"),
 					"description": _("Create commission payments")
-				}
-			]
-		},
-		{
-			"label": _("Reports"),
-			"icon": "fa fa-chart-bar",
-			"items": [
+				},
+				{
+					"type": "separator"
+				},
 				{
 					"type": "report",
 					"name": "Agent Commission Summary",
@@ -63,28 +66,14 @@ def get_sales_commission_menu():
 				}
 			]
 		}
-	]
+		
+		# Add to original menu
+		original_menu.append(sales_commission_menu)
+		
+		return original_menu
+
 
 def get_selling_menu():
-	"""Override Selling menu to include Sales Commission"""
-	# Get original selling menu
-	original_menu = frappe.get_hooks("selling_menu") or []
-	
-	# Add Sales Commission submenu
-	sales_commission_menu = {
-		"label": _("Sales Commission"),
-		"icon": "fa fa-percentage",
-		"items": get_sales_commission_menu()
-	}
-	
-	# Insert after existing items
-	original_menu.append(sales_commission_menu)
-	
-	return original_menu
-
-# Hook to override selling menu
-def get_selling_menu_override():
-	return get_selling_menu()
-
-# Add to hooks
-frappe.hooks.selling_menu = get_selling_menu_override
+	"""Hook function to get selling menu with Sales Commission"""
+	custom_desk = CustomDesk()
+	return custom_desk.get_selling_menu()
