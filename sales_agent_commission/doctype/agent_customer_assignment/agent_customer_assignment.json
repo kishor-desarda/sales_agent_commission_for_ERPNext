@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_copy": 1,
- "allow_events_in_timeline": 0,
+ "allow_events_in_timeline": 1,
  "allow_guest_to_view": 0,
  "allow_import": 1,
  "allow_rename": 1,
@@ -9,26 +9,26 @@
  "beta": 0,
  "creation": "2024-01-01 00:00:00",
  "custom": 0,
- "description": "Define commission rules for sales agents with item group-wise commission rates",
+ "description": "Assign customers to sales agents for commission tracking",
  "docstatus": 0,
  "doctype": "DocType",
- "document_type": "Setup",
- "editable_grid": 1,
+ "document_type": "Document",
+ "editable_grid": 0,
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
   "agent",
+  "customer",
   "company",
-  "effective_from",
-  "effective_to",
+  "assignment_date",
+  "end_date",
   "status",
-  "section_break_7",
-  "calculation_method",
-  "minimum_commission_amount",
-  "maximum_commission_amount",
-  "section_break_11",
-  "commission_rates",
-  "section_break_13",
+  "column_break_7",
+  "priority",
+  "exclusive_assignment",
+  "commission_override",
+  "override_commission_percentage",
+  "section_break_12",
   "notes",
   "amended_from"
  ],
@@ -37,7 +37,7 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Naming Series",
-   "options": "ACR-.YYYY.-",
+   "options": "ACA-.YYYY.-",
    "reqd": 1
   },
   {
@@ -49,6 +49,14 @@
    "reqd": 1
   },
   {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
    "fieldname": "company",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -57,17 +65,17 @@
    "reqd": 1
   },
   {
-   "fieldname": "effective_from",
+   "fieldname": "assignment_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Effective From",
+   "label": "Assignment Date",
    "reqd": 1
   },
   {
-   "fieldname": "effective_to",
+   "fieldname": "end_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Effective To"
+   "label": "End Date"
   },
   {
    "default": "Active",
@@ -75,50 +83,42 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Active\nInactive",
+   "options": "Active\nInactive\nExpired",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "priority",
+   "fieldtype": "Int",
+   "label": "Priority",
+   "reqd": 1
+  },
+  {
+   "default": 0,
+   "fieldname": "exclusive_assignment",
+   "fieldtype": "Check",
+   "label": "Exclusive Assignment"
+  },
+  {
+   "default": 0,
+   "fieldname": "commission_override",
+   "fieldtype": "Check",
+   "label": "Override Commission Rate"
+  },
+  {
+   "fieldname": "override_commission_percentage",
+   "fieldtype": "Float",
+   "label": "Override Commission Percentage (%)",
+   "precision": 2,
+   "depends_on": "eval:doc.commission_override==1"
   },
   {
    "collapsible": 1,
-   "fieldname": "section_break_7",
-   "fieldtype": "Section Break",
-   "label": "Commission Settings"
-  },
-  {
-   "default": "Percentage",
-   "fieldname": "calculation_method",
-   "fieldtype": "Select",
-   "label": "Calculation Method",
-   "options": "Percentage\nFixed Amount\nTiered",
-   "reqd": 1
-  },
-  {
-   "fieldname": "minimum_commission_amount",
-   "fieldtype": "Currency",
-   "label": "Minimum Commission Amount",
-   "options": "Company:company:default_currency"
-  },
-  {
-   "fieldname": "maximum_commission_amount",
-   "fieldtype": "Currency",
-   "label": "Maximum Commission Amount",
-   "options": "Company:company:default_currency"
-  },
-  {
-   "fieldname": "section_break_11",
-   "fieldtype": "Section Break",
-   "label": "Item Group Commission Rates"
-  },
-  {
-   "fieldname": "commission_rates",
-   "fieldtype": "Table",
-   "label": "Commission Rates",
-   "options": "Agent Commission Rate",
-   "reqd": 1
-  },
-  {
-   "collapsible": 1,
-   "fieldname": "section_break_13",
+   "fieldname": "section_break_12",
    "fieldtype": "Section Break",
    "label": "Additional Information"
   },
@@ -132,7 +132,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Agent Commission Rule",
+   "options": "Agent Customer Assignment",
    "print_hide": 1,
    "read_only": 1
   }
@@ -142,20 +142,12 @@
   {
    "link_doctype": "Agent Commission Entry",
    "link_fieldname": "agent"
-  },
-  {
-   "link_doctype": "Agent Customer Assignment",
-   "link_fieldname": "agent"
-  },
-  {
-   "link_doctype": "Commission Payment Voucher",
-   "link_fieldname": "agent"
   }
  ],
  "modified": "2024-01-01 00:00:00",
  "modified_by": "Administrator",
  "module": "Sales Agent Commission",
- "name": "Agent Commission Rule",
+ "name": "Agent Customer Assignment",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
@@ -188,6 +180,7 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
+ "title_field": "agent",
  "track_changes": 1,
  "track_seen": 1,
  "track_views": 1
