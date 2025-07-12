@@ -104,7 +104,16 @@ app_license = "MIT"
 
 doc_events = {
 	"Sales Invoice": {
-		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.agent_commission_entry.agent_commission_entry.create_commission_entries"
+		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.agent_commission_entry.agent_commission_entry.create_commission_entries",
+		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.agent_commission_entry.agent_commission_entry.cancel_commission_entries"
+	},
+	"Payment Entry": {
+		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.agent_commission_entry.agent_commission_entry.update_commission_payment_status",
+		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.agent_commission_entry.agent_commission_entry.revert_commission_payment_status"
+	},
+	"Commission Payment Voucher": {
+		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.commission_payment_voucher.commission_payment_voucher.update_commission_entries",
+		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.commission_payment_voucher.commission_payment_voucher.revert_commission_entries"
 	}
 }
 
@@ -188,3 +197,16 @@ doc_events = {
 # auth_hooks = [
 #	"sales_agent_commission.auth.validate"
 # ]
+
+# Sidebar Integration
+# -------------------
+
+# Add Sales Commission submenu under Selling
+app_include_js = [
+	"/assets/sales_agent_commission/js/sidebar.js"
+]
+
+# Override sidebar to add Sales Commission submenu
+override_doctype_class = {
+	"Desk": "sales_agent_commission.overrides.CustomDesk"
+}

@@ -5,73 +5,78 @@
  "allow_guest_to_view": 0,
  "allow_import": 0,
  "allow_rename": 0,
- "autoname": "field:commission_entry",
+ "autoname": "field:item_code",
  "beta": 0,
  "creation": "2024-01-01 00:00:00",
  "custom": 0,
- "description": "Commission entries included in payment voucher",
+ "description": "Individual item commission details",
  "docstatus": 0,
  "doctype": "DocType",
  "document_type": "Child Table",
  "editable_grid": 0,
  "engine": "InnoDB",
  "field_order": [
-  "commission_entry",
-  "sales_invoice",
-  "customer",
-  "invoice_date",
-  "commission_amount",
-  "paid_amount"
+  "item_code",
+  "item_name",
+  "item_group",
+  "qty",
+  "base_amount",
+  "commission_rate",
+  "commission_amount"
  ],
  "fields": [
   {
-   "fieldname": "commission_entry",
+   "fieldname": "item_code",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Commission Entry",
-   "options": "Agent Commission Entry",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "commission_entry.sales_invoice",
-   "fieldname": "sales_invoice",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Sales Invoice",
-   "options": "Sales Invoice",
+   "label": "Item Code",
+   "options": "Item",
    "read_only": 1
   },
   {
-   "fetch_from": "commission_entry.customer",
-   "fieldname": "customer",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "item_group",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Customer",
-   "options": "Customer",
+   "label": "Item Group",
+   "options": "Item Group",
    "read_only": 1
   },
   {
-   "fetch_from": "commission_entry.posting_date",
-   "fieldname": "invoice_date",
-   "fieldtype": "Date",
+   "fieldname": "qty",
+   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Invoice Date",
+   "label": "Quantity",
+   "precision": 2,
    "read_only": 1
   },
   {
-   "fetch_from": "commission_entry.total_commission_amount",
+   "fieldname": "base_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Base Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "commission_rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Commission Rate (%)",
+   "precision": 2,
+   "read_only": 1
+  },
+  {
    "fieldname": "commission_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Commission Amount",
    "read_only": 1
-  },
-  {
-   "fieldname": "paid_amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Paid Amount",
-   "reqd": 1
   }
  ],
  "istable": 1,
@@ -79,7 +84,7 @@
  "modified": "2024-01-01 00:00:00",
  "modified_by": "Administrator",
  "module": "Sales Agent Commission",
- "name": "Commission Payment Item",
+ "name": "Agent Commission Item",
  "owner": "Administrator",
  "permissions": [],
  "sort_field": "modified",

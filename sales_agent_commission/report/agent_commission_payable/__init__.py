@@ -2,4 +2,3 @@
 # For license information, please see license.txt
 
 # import frappe
-from . import agent_commission_rule

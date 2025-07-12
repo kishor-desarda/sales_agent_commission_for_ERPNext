@@ -1,0 +1,30 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2024-01-01 00:00:00",
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2024-01-01 00:00:00",
+ "modified_by": "Administrator",
+ "module": "Sales Agent Commission",
+ "name": "Agent Commission Payable",
+ "owner": "Administrator",
+ "query": "",
+ "ref_doctype": "Agent Commission Entry",
+ "report_name": "Agent Commission Payable",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Sales Manager"
+  },
+  {
+   "role": "Sales User"
+  },
+  {
+   "role": "Accounts Manager"
+  }
+ ]
+}

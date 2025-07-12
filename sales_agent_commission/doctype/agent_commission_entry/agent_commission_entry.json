@@ -9,7 +9,7 @@
  "beta": 0,
  "creation": "2024-01-01 00:00:00",
  "custom": 0,
- "description": "Track calculated commissions for each transaction",
+ "description": "Commission entries created from Sales Invoices for agents",
  "docstatus": 0,
  "doctype": "DocType",
  "document_type": "Document",
@@ -22,24 +22,19 @@
   "customer",
   "posting_date",
   "column_break_5",
-  "item_group",
-  "item_code",
-  "item_name",
-  "qty",
-  "section_break_10",
-  "base_amount",
-  "commission_rate",
-  "commission_amount",
-  "column_break_14",
-  "payment_status",
-  "payment_date",
-  "commission_voucher",
-  "section_break_18",
   "company",
   "currency",
   "exchange_rate",
-  "commission_amount_company_currency",
-  "section_break_23",
+  "total_commission_amount",
+  "section_break_10",
+  "commission_items",
+  "section_break_12",
+  "payment_status",
+  "paid_amount",
+  "outstanding_amount",
+  "payment_date",
+  "commission_payment_voucher",
+  "section_break_18",
   "calculation_details",
   "remarks",
   "amended_from"
@@ -56,7 +51,7 @@
    "fieldname": "agent",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Agent",
+   "label": "Sales Agent",
    "options": "Sales Partner",
    "reqd": 1
   },
@@ -90,92 +85,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "item_group",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Item Group",
-   "options": "Item Group",
-   "reqd": 1
-  },
-  {
-   "fieldname": "item_code",
-   "fieldtype": "Link",
-   "label": "Item Code",
-   "options": "Item"
-  },
-  {
-   "fieldname": "item_name",
-   "fieldtype": "Data",
-   "label": "Item Name",
-   "read_only": 1
-  },
-  {
-   "fieldname": "qty",
-   "fieldtype": "Float",
-   "label": "Quantity",
-   "precision": 2
-  },
-  {
-   "fieldname": "section_break_10",
-   "fieldtype": "Section Break",
-   "label": "Commission Details"
-  },
-  {
-   "fieldname": "base_amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Base Amount",
-   "options": "currency",
-   "reqd": 1
-  },
-  {
-   "fieldname": "commission_rate",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Commission Rate (%)",
-   "precision": 2,
-   "reqd": 1
-  },
-  {
-   "fieldname": "commission_amount",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Commission Amount",
-   "options": "currency",
-   "reqd": 1
-  },
-  {
-   "fieldname": "column_break_14",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "Pending",
-   "fieldname": "payment_status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Payment Status",
-   "options": "Pending\nPaid\nPartially Paid\nCancelled",
-   "reqd": 1
-  },
-  {
-   "fieldname": "payment_date",
-   "fieldtype": "Date",
-   "label": "Payment Date"
-  },
-  {
-   "fieldname": "commission_voucher",
-   "fieldtype": "Link",
-   "label": "Commission Voucher",
-   "options": "Commission Payment Voucher",
-   "read_only": 1
-  },
-  {
-   "collapsible": 1,
-   "fieldname": "section_break_18",
-   "fieldtype": "Section Break",
-   "label": "Company & Currency"
-  },
-  {
    "fetch_from": "sales_invoice.company",
    "fieldname": "company",
    "fieldtype": "Link",
@@ -201,15 +110,71 @@
    "read_only": 1
   },
   {
-   "fieldname": "commission_amount_company_currency",
+   "fieldname": "total_commission_amount",
    "fieldtype": "Currency",
-   "label": "Commission Amount (Company Currency)",
-   "options": "Company:company:default_currency",
+   "in_list_view": 1,
+   "label": "Total Commission Amount",
+   "options": "currency",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break",
+   "label": "Commission Items"
+  },
+  {
+   "fieldname": "commission_items",
+   "fieldtype": "Table",
+   "label": "Commission Items",
+   "options": "Agent Commission Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break",
+   "label": "Payment Information"
+  },
+  {
+   "default": "Pending",
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Payment Status",
+   "options": "Pending\nPartially Paid\nPaid\nCancelled",
+   "reqd": 1
+  },
+  {
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Paid Amount",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "outstanding_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Outstanding Amount",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Date",
+   "label": "Payment Date"
+  },
+  {
+   "fieldname": "commission_payment_voucher",
+   "fieldtype": "Link",
+   "label": "Commission Payment Voucher",
+   "options": "Commission Payment Voucher",
    "read_only": 1
   },
   {
    "collapsible": 1,
-   "fieldname": "section_break_23",
+   "fieldname": "section_break_18",
    "fieldtype": "Section Break",
    "label": "Additional Information"
   },
@@ -235,7 +200,12 @@
   }
  ],
  "is_submittable": 1,
- "links": [],
+ "links": [
+  {
+   "link_doctype": "Commission Payment Voucher",
+   "link_fieldname": "commission_entries"
+  }
+ ],
  "modified": "2024-01-01 00:00:00",
  "modified_by": "Administrator",
  "module": "Sales Agent Commission",

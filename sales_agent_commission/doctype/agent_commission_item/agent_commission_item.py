@@ -5,7 +5,7 @@ import frappe
 from frappe.model.document import Document
 
 
-class CommissionPaymentItem(Document):
+class AgentCommissionItem(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -14,12 +14,13 @@ class CommissionPaymentItem(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
+		base_amount: DF.Currency
 		commission_amount: DF.Currency
-		commission_entry: DF.Link
-		customer: DF.Link | None
-		invoice_date: DF.Date | None
-		paid_amount: DF.Currency
-		sales_invoice: DF.Link | None
+		commission_rate: DF.Float
+		item_code: DF.Link | None
+		item_group: DF.Link
+		item_name: DF.Data | None
+		qty: DF.Float
 	# end: auto-generated types
 
 	pass
