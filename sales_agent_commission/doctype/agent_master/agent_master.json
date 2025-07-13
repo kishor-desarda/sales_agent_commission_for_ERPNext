@@ -1,0 +1,290 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:agent_code",
+ "creation": "2024-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_information_section",
+  "agent_code",
+  "agent_name",
+  "status",
+  "column_break_1",
+  "agent_type",
+  "currency",
+  "ledger_account",
+  
+  "contact_details_section",
+  "contact_person",
+  "email",
+  "mobile_no",
+  "column_break_2",
+  "address",
+  "city",
+  "state",
+  "country",
+  
+  "agreement_details_section",
+  "agreement_date",
+  "agreement_expiry_date",
+  "column_break_3",
+  "agreement_file",
+  "agreement_status",
+  
+  "commission_structure_section",
+  "commission_rates",
+  
+  "territory_and_customer_section",
+  "territories",
+  "customer_assignments",
+  
+  "bank_details_section",
+  "bank_accounts",
+  
+  "additional_info_section",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_information_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information"
+  },
+  {
+   "fieldname": "agent_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Agent Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "agent_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Agent Name",
+   "reqd": 1
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Active\nInactive\nSuspended",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "agent_type",
+   "fieldtype": "Select",
+   "label": "Agent Type",
+   "options": "Individual\nCompany\nPartnership",
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "ledger_account",
+   "fieldtype": "Link",
+   "label": "Ledger Account",
+   "options": "Account",
+   "read_only": 1
+  },
+  
+  {
+   "fieldname": "contact_details_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Details"
+  },
+  {
+   "fieldname": "contact_person",
+   "fieldtype": "Data",
+   "label": "Contact Person",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "options": "Phone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "State"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  
+  {
+   "fieldname": "agreement_details_section",
+   "fieldtype": "Section Break",
+   "label": "Agreement Details"
+  },
+  {
+   "fieldname": "agreement_date",
+   "fieldtype": "Date",
+   "label": "Agreement Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "agreement_expiry_date",
+   "fieldtype": "Date",
+   "label": "Agreement Expiry Date"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "agreement_file",
+   "fieldtype": "Attach",
+   "label": "Agreement File"
+  },
+  {
+   "default": "Active",
+   "fieldname": "agreement_status",
+   "fieldtype": "Select",
+   "label": "Agreement Status",
+   "options": "Active\nExpired\nRenewed",
+   "read_only": 1
+  },
+  
+  {
+   "fieldname": "commission_structure_section",
+   "fieldtype": "Section Break",
+   "label": "Commission Structure"
+  },
+  {
+   "fieldname": "commission_rates",
+   "fieldtype": "Table",
+   "label": "Commission Rates",
+   "options": "Agent Commission Rate",
+   "reqd": 1
+  },
+  
+  {
+   "fieldname": "territory_and_customer_section",
+   "fieldtype": "Section Break",
+   "label": "Territory and Customer Assignment"
+  },
+  {
+   "fieldname": "territories",
+   "fieldtype": "Table",
+   "label": "Territories",
+   "options": "Agent Territory Assignment"
+  },
+  {
+   "fieldname": "customer_assignments",
+   "fieldtype": "Table",
+   "label": "Customer Assignments",
+   "options": "Agent Customer Assignment"
+  },
+  
+  {
+   "fieldname": "bank_details_section",
+   "fieldtype": "Section Break",
+   "label": "Bank Details"
+  },
+  {
+   "fieldname": "bank_accounts",
+   "fieldtype": "Table",
+   "label": "Bank Accounts",
+   "options": "Agent Bank Account",
+   "reqd": 1
+  },
+  
+  {
+   "fieldname": "additional_info_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text",
+   "label": "Notes"
+  }
+ ],
+ "links": [],
+ "modified": "2024-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Sales Agent Commission",
+ "name": "Agent Master",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

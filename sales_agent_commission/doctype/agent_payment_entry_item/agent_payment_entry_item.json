@@ -1,0 +1,67 @@
+{
+ "actions": [],
+ "creation": "2024-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "commission_entry",
+  "sales_invoice",
+  "posting_date",
+  "commission_amount",
+  "invoice_payment_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "commission_entry",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Commission Entry",
+   "options": "Agent Commission Entry",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "commission_entry.sales_invoice",
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "commission_entry.posting_date",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Posting Date",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "commission_entry.commission_amount",
+   "fieldname": "commission_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Commission Amount",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "commission_entry.invoice_payment_date",
+   "fieldname": "invoice_payment_date",
+   "fieldtype": "Date",
+   "label": "Invoice Payment Date",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2024-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Sales Agent Commission",
+ "name": "Agent Payment Entry Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
