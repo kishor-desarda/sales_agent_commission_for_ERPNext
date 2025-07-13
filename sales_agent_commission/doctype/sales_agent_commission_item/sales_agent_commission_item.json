@@ -9,20 +9,23 @@
  "beta": 0,
  "creation": "2024-01-01 00:00:00",
  "custom": 0,
- "description": "Individual item commission details",
+ "description": "Commission calculation details for each item",
  "docstatus": 0,
  "doctype": "DocType",
  "document_type": "Child Table",
- "editable_grid": 0,
+ "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "item_code",
   "item_name",
   "item_group",
   "qty",
+  "rate",
+  "amount",
   "base_amount",
   "commission_rate",
-  "commission_amount"
+  "commission_amount",
+  "calculation_method"
  ],
  "fields": [
   {
@@ -31,7 +34,8 @@
    "in_list_view": 1,
    "label": "Item Code",
    "options": "Item",
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "item_name",
@@ -51,9 +55,22 @@
   {
    "fieldname": "qty",
    "fieldtype": "Float",
-   "in_list_view": 1,
    "label": "Quantity",
-   "precision": 2,
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "options": "currency",
    "read_only": 1
   },
   {
@@ -61,6 +78,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Base Amount",
+   "options": "Company:company:default_currency",
    "read_only": 1
   },
   {
@@ -76,6 +94,13 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Commission Amount",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "calculation_method",
+   "fieldtype": "Data",
+   "label": "Calculation Method",
    "read_only": 1
   }
  ],
@@ -84,7 +109,7 @@
  "modified": "2024-01-01 00:00:00",
  "modified_by": "Administrator",
  "module": "Sales Agent Commission",
- "name": "Agent Commission Item",
+ "name": "Sales Agent Commission Item",
  "owner": "Administrator",
  "permissions": [],
  "sort_field": "modified",

@@ -1,6 +1,8 @@
 # Copyright (c) 2024, Frappe Technologies Pvt. Ltd. and contributors
 # For license information, please see license.txt
 
+__version__ = '1.1.0'
+
 app_name = "sales_agent_commission"
 app_title = "Sales Agent Commission"
 app_publisher = "Frappe Technologies Pvt. Ltd."

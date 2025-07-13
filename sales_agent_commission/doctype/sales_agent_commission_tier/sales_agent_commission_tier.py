@@ -5,7 +5,7 @@ import frappe
 from frappe.model.document import Document
 
 
-class AgentCommissionRate(Document):
+class SalesAgentCommissionTier(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -14,10 +14,12 @@ class AgentCommissionRate(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		fixed_amount: DF.Currency | None
-		item_group: DF.Link
-		commission_percentage: DF.Float | None
-		tiered_rates: DF.Table
+		commission_percentage: DF.Float
+		from_amount: DF.Currency
+		parent: DF.Data
+		parentfield: DF.Data
+		parenttype: DF.Data
+		to_amount: DF.Currency | None
 	# end: auto-generated types
 
 	pass

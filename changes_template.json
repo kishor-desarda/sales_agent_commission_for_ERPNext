@@ -1,0 +1,37 @@
+{
+  "added": [
+    "New feature: Enhanced agent dashboard with real-time metrics",
+    "New report: Agent performance analytics",
+    "New integration: WhatsApp notifications for commission statements",
+    "New field: Commission tier override at customer level"
+  ],
+  "fixed": [
+    "Fixed commission calculation for foreign currency transactions",
+    "Fixed workspace visibility issue in mobile view",
+    "Fixed email template formatting for commission statements",
+    "Fixed permission issue for Sales User role"
+  ],
+  "changed": [
+    "Updated UI layout for better mobile responsiveness",
+    "Changed default commission calculation method to percentage",
+    "Updated commission statement template design",
+    "Changed territory allocation logic for better accuracy"
+  ],
+  "improved": [
+    "Improved performance of commission calculation by 50%",
+    "Enhanced error handling and user feedback",
+    "Better validation messages for commission rates",
+    "Improved audit trail with more detailed logging"
+  ],
+  "technical": [
+    "Upgraded to support ERPNext v14.0",
+    "Added comprehensive unit tests",
+    "Implemented caching for commission rate lookups",
+    "Added database indexes for better query performance"
+  ],
+  "removed": [
+    "Removed deprecated commission rule doctype",
+    "Removed legacy payment tracking fields",
+    "Removed unused custom fields from Sales Partner"
+  ]
+}

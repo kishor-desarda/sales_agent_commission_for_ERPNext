@@ -1,15 +1,15 @@
 {
  "actions": [],
- "allow_copy": 1,
+ "allow_copy": 0,
  "allow_events_in_timeline": 1,
  "allow_guest_to_view": 0,
  "allow_import": 1,
- "allow_rename": 1,
+ "allow_rename": 0,
  "autoname": "naming_series:",
  "beta": 0,
  "creation": "2024-01-01 00:00:00",
  "custom": 0,
- "description": "Assign customers to sales agents for commission tracking",
+ "description": "Customer assignments to sales agents",
  "docstatus": 0,
  "doctype": "DocType",
  "document_type": "Document",
@@ -17,18 +17,20 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
-  "agent",
+  "sales_agent",
   "customer",
-  "company",
+  "territory",
   "assignment_date",
-  "end_date",
+  "column_break_5",
   "status",
-  "column_break_7",
   "priority",
-  "exclusive_assignment",
-  "commission_override",
-  "override_commission_percentage",
-  "section_break_12",
+  "is_exclusive",
+  "commission_override_section",
+  "override_commission_rates",
+  "commission_rates",
+  "validity_section",
+  "valid_from",
+  "valid_to",
   "notes",
   "amended_from"
  ],
@@ -37,15 +39,15 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Naming Series",
-   "options": "ACA-.YYYY.-",
+   "options": "SACA-.YYYY.-",
    "reqd": 1
   },
   {
-   "fieldname": "agent",
+   "fieldname": "sales_agent",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Sales Agent",
-   "options": "Sales Partner",
+   "options": "Sales Agent",
    "reqd": 1
   },
   {
@@ -57,14 +59,15 @@
    "reqd": 1
   },
   {
-   "fieldname": "company",
+   "fetch_from": "customer.territory",
+   "fieldname": "territory",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1
+   "label": "Territory",
+   "options": "Territory",
+   "read_only": 1
   },
   {
+   "default": "Today",
    "fieldname": "assignment_date",
    "fieldtype": "Date",
    "in_list_view": 1,
@@ -72,10 +75,8 @@
    "reqd": 1
   },
   {
-   "fieldname": "end_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "End Date"
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
   },
   {
    "default": "Active",
@@ -83,44 +84,58 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Active\nInactive\nExpired",
+   "options": "Active\nInactive\nSuspended",
    "reqd": 1
   },
   {
-   "fieldname": "column_break_7",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "1",
+   "default": "Normal",
    "fieldname": "priority",
-   "fieldtype": "Int",
+   "fieldtype": "Select",
    "label": "Priority",
-   "reqd": 1
+   "options": "High\nNormal\nLow"
   },
   {
    "default": 0,
-   "fieldname": "exclusive_assignment",
+   "fieldname": "is_exclusive",
    "fieldtype": "Check",
    "label": "Exclusive Assignment"
   },
   {
-   "default": 0,
-   "fieldname": "commission_override",
-   "fieldtype": "Check",
-   "label": "Override Commission Rate"
+   "collapsible": 1,
+   "fieldname": "commission_override_section",
+   "fieldtype": "Section Break",
+   "label": "Commission Override"
   },
   {
-   "fieldname": "override_commission_percentage",
-   "fieldtype": "Float",
-   "label": "Override Commission Percentage (%)",
-   "precision": 2,
-   "depends_on": "eval:doc.commission_override==1"
+   "default": 0,
+   "fieldname": "override_commission_rates",
+   "fieldtype": "Check",
+   "label": "Override Commission Rates"
+  },
+  {
+   "depends_on": "eval:doc.override_commission_rates==1",
+   "fieldname": "commission_rates",
+   "fieldtype": "Table",
+   "label": "Commission Rates",
+   "options": "Sales Agent Commission Rate"
   },
   {
    "collapsible": 1,
-   "fieldname": "section_break_12",
+   "fieldname": "validity_section",
    "fieldtype": "Section Break",
-   "label": "Additional Information"
+   "label": "Validity"
+  },
+  {
+   "default": "Today",
+   "fieldname": "valid_from",
+   "fieldtype": "Date",
+   "label": "Valid From",
+   "reqd": 1
+  },
+  {
+   "fieldname": "valid_to",
+   "fieldtype": "Date",
+   "label": "Valid To"
   },
   {
    "fieldname": "notes",
@@ -132,22 +147,17 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Agent Customer Assignment",
+   "options": "Sales Agent Customer Assignment",
    "print_hide": 1,
    "read_only": 1
   }
  ],
  "is_submittable": 1,
- "links": [
-  {
-   "link_doctype": "Agent Commission Entry",
-   "link_fieldname": "agent"
-  }
- ],
+ "links": [],
  "modified": "2024-01-01 00:00:00",
  "modified_by": "Administrator",
  "module": "Sales Agent Commission",
- "name": "Agent Customer Assignment",
+ "name": "Sales Agent Customer Assignment",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
@@ -176,11 +186,10 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "agent",
+ "title_field": "customer",
  "track_changes": 1,
  "track_seen": 1,
  "track_views": 1
