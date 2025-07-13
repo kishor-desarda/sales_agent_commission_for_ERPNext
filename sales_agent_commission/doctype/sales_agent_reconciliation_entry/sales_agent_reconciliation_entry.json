@@ -1,0 +1,79 @@
+{
+ "actions": [],
+ "allow_copy": 0,
+ "allow_events_in_timeline": 0,
+ "allow_guest_to_view": 0,
+ "allow_import": 0,
+ "allow_rename": 0,
+ "autoname": "field:reconciliation_entry",
+ "beta": 0,
+ "creation": "2024-01-01 00:00:00",
+ "custom": 0,
+ "description": "Payment reconciliation entries linked to commission entry",
+ "docstatus": 0,
+ "doctype": "DocType",
+ "document_type": "Child Table",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "reconciliation_entry",
+  "reconciliation_date",
+  "reconciled_amount",
+  "commission_due_amount",
+  "reconciliation_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "reconciliation_entry",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Reconciliation Entry",
+   "options": "Payment Reconciliation",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "reconciliation_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Reconciliation Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reconciled_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Reconciled Amount",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "commission_due_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Commission Due Amount",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reconciliation_status",
+   "fieldtype": "Data",
+   "label": "Reconciliation Status",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2024-01-01 00:00:00",
+ "modified_by": "Administrator",
+ "module": "Sales Agent Commission",
+ "name": "Sales Agent Reconciliation Entry",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0,
+ "track_seen": 0,
+ "track_views": 0
+}

@@ -5,7 +5,7 @@ import frappe
 from frappe.model.document import Document
 
 
-class AgentCommissionItem(Document):
+class SalesAgentReconciliationEntry(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -14,13 +14,14 @@ class AgentCommissionItem(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		base_amount: DF.Currency
-		commission_amount: DF.Currency
-		commission_rate: DF.Float
-		item_code: DF.Link | None
-		item_group: DF.Link
-		item_name: DF.Data | None
-		qty: DF.Float
+		commission_due_amount: DF.Currency | None
+		parent: DF.Data
+		parentfield: DF.Data
+		parenttype: DF.Data
+		reconciliation_date: DF.Date | None
+		reconciliation_entry: DF.Link
+		reconciliation_status: DF.Data | None
+		reconciled_amount: DF.Currency | None
 	# end: auto-generated types
 
 	pass
