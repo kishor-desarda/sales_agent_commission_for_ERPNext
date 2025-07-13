@@ -311,8 +311,8 @@ def fix_permissions():
 
 def main():
     """Main function"""
-    print("🔧 Sales Agent Commission - Installation Fix Script")
-    print("=" * 50)
+    print("🔧 Sales Agent Commission v1.1.0 - Installation Fix Script")
+    print("=" * 55)
     
     if not os.path.exists("sales_agent_commission"):
         print("❌ Error: sales_agent_commission directory not found!")
