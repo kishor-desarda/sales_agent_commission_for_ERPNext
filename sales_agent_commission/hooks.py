@@ -107,24 +107,25 @@ after_uninstall = "sales_agent_commission.install.after_uninstall"
 
 doc_events = {
 	"Sales Invoice": {
-		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.create_commission_entries",
-		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.cancel_commission_entries"
+		"on_submit": [
+			"sales_agent_commission.overrides.create_agent_commission_entries"
+		],
+		"on_cancel": [
+			"sales_agent_commission.overrides.cancel_agent_commission_entries"
+		]
 	},
 	"Payment Entry": {
-		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.update_commission_payment_status",
-		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.revert_commission_payment_status"
+		"on_submit": [
+			"sales_agent_commission.overrides.check_invoice_payment_reconciliation"
+		],
+		"on_cancel": [
+			"sales_agent_commission.overrides.revert_invoice_payment_reconciliation"
+		]
 	},
 	"Payment Reconciliation": {
-		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.update_commission_due_status",
-		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.revert_commission_due_status"
-	},
-	"Commission Payment Voucher": {
-		"on_submit": "sales_agent_commission.sales_agent_commission.doctype.commission_payment_voucher.commission_payment_voucher.update_commission_entries",
-		"on_cancel": "sales_agent_commission.sales_agent_commission.doctype.commission_payment_voucher.commission_payment_voucher.revert_commission_entries"
-	},
-	"Sales Partner": {
-		"after_insert": "sales_agent_commission.sales_agent_commission.doctype.sales_agent.sales_agent.create_sales_agent_from_partner",
-		"on_update": "sales_agent_commission.sales_agent_commission.doctype.sales_agent.sales_agent.update_sales_agent_from_partner"
+		"on_submit": [
+			"sales_agent_commission.overrides.update_commission_entries_on_reconciliation"
+		]
 	}
 }
 
@@ -133,10 +134,14 @@ doc_events = {
 
 scheduler_events = {
 	"daily": [
-		"sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.update_commission_status_daily"
+		"sales_agent_commission.tasks.check_agreement_expiry",
+		"sales_agent_commission.tasks.update_commission_status_daily"
 	],
 	"weekly": [
-		"sales_agent_commission.sales_agent_commission.doctype.sales_agent_commission_entry.sales_agent_commission_entry.send_commission_statements"
+		"sales_agent_commission.tasks.send_commission_statements"
+	],
+	"monthly": [
+		"sales_agent_commission.tasks.generate_monthly_commission_report"
 	]
 }
 
@@ -237,24 +242,32 @@ custom_fields = {
 	],
 	"Sales Invoice": [
 		{
-			"fieldname": "commission_section",
+			"fieldname": "agent_commission_section",
 			"fieldtype": "Section Break",
-			"label": "Commission Information",
+			"label": "Agent Commission Information",
 			"insert_after": "terms",
 			"collapsible": 1
 		},
 		{
-			"fieldname": "sales_agent",
-			"fieldtype": "Link",
-			"label": "Sales Agent",
-			"options": "Sales Agent",
-			"insert_after": "commission_section"
+			"fieldname": "applicable_agents",
+			"fieldtype": "Small Text",
+			"label": "Applicable Agents",
+			"insert_after": "agent_commission_section",
+			"read_only": 1,
+			"description": "Agents eligible for commission based on territory and customer"
 		},
 		{
 			"fieldname": "commission_entries_created",
 			"fieldtype": "Check",
 			"label": "Commission Entries Created",
-			"insert_after": "sales_agent",
+			"insert_after": "applicable_agents",
+			"read_only": 1
+		},
+		{
+			"fieldname": "total_commission_amount",
+			"fieldtype": "Currency",
+			"label": "Total Commission Amount",
+			"insert_after": "commission_entries_created",
 			"read_only": 1
 		}
 	],
@@ -297,9 +310,10 @@ fixtures = [
 					"Sales Partner-sales_agent_commission_section",
 					"Sales Partner-linked_sales_agent",
 					"Sales Partner-auto_create_commission_entries",
-					"Sales Invoice-commission_section",
-					"Sales Invoice-sales_agent",
+					"Sales Invoice-agent_commission_section",
+					"Sales Invoice-applicable_agents",
 					"Sales Invoice-commission_entries_created",
+					"Sales Invoice-total_commission_amount",
 					"Customer-sales_agent_section",
 					"Customer-primary_sales_agent",
 					"Customer-commission_applicable"
