@@ -53,7 +53,7 @@ class CommissionPaymentVoucher(Document):
 				frappe.throw(_("Commission Entry is required for all entries"))
 			
 			# Validate paid amount
-			commission_doc = frappe.get_doc("Agent Commission Entry", entry.commission_entry)
+			commission_doc = frappe.get_doc("Sales Agent Commission Entry", entry.commission_entry)
 			if flt(entry.paid_amount) > flt(commission_doc.outstanding_amount):
 				frappe.throw(_("Paid amount cannot exceed outstanding amount for commission entry {0}").format(entry.commission_entry))
 
@@ -68,7 +68,7 @@ class CommissionPaymentVoucher(Document):
 	def update_commission_entries(self):
 		"""Update commission entries with payment information"""
 		for entry in self.commission_entries:
-			commission_doc = frappe.get_doc("Agent Commission Entry", entry.commission_entry)
+			commission_doc = frappe.get_doc("Sales Agent Commission Entry", entry.commission_entry)
 			
 			# Update paid amount
 			commission_doc.paid_amount = flt(commission_doc.paid_amount or 0) + flt(entry.paid_amount)
@@ -87,7 +87,7 @@ class CommissionPaymentVoucher(Document):
 	def revert_commission_entries(self):
 		"""Revert commission entries when voucher is cancelled"""
 		for entry in self.commission_entries:
-			commission_doc = frappe.get_doc("Agent Commission Entry", entry.commission_entry)
+			commission_doc = frappe.get_doc("Sales Agent Commission Entry", entry.commission_entry)
 			
 			# Revert paid amount
 			commission_doc.paid_amount = flt(commission_doc.paid_amount or 0) - flt(entry.paid_amount)
@@ -109,14 +109,14 @@ class CommissionPaymentVoucher(Document):
 @frappe.whitelist()
 def get_pending_commission_entries(agent, company):
 	"""Get pending commission entries for an agent"""
-	return frappe.get_all("Agent Commission Entry",
+	return frappe.get_all("Sales Agent Commission Entry",
 		filters={
-			"agent": agent,
-			"company": company,
-			"payment_status": ["in", ["Pending", "Partially Paid"]],
-			"docstatus": 1
+		"agent": agent,
+		"company": company,
+		"payment_status": ["in", ["Pending", "Partially Paid"]],
+		"docstatus": 1
 		},
-		fields=["name", "sales_invoice", "customer", "posting_date", "total_commission_amount", "paid_amount", "outstanding_amount"]
+	fields=["name", "sales_invoice", "customer", "posting_date", "total_commission_amount", "paid_amount", "outstanding_amount"]
 	)
 
 @frappe.whitelist()

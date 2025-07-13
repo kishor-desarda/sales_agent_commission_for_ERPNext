@@ -133,7 +133,7 @@
  "is_submittable": 1,
  "links": [
   {
-   "link_doctype": "Agent Commission Entry",
+   "link_doctype": "Sales Agent Commission Entry",
    "link_fieldname": "commission_payment_voucher"
   }
  ],

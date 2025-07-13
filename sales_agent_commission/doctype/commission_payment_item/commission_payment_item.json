@@ -29,7 +29,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Commission Entry",
-   "options": "Agent Commission Entry",
+  "options": "Sales Agent Commission Entry",
    "reqd": 1
   },
   {
